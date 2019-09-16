@@ -63,9 +63,9 @@ class _Acerca_deState extends State<Acerca_de> {
             new Image(image: AssetImage('images/Logo.png'), width: MediaQuery.of(context).size.width / 2, ),
 
             new Text(
-              '\n\neste es el nombre de Paquete: '+_packageInfo.packageName+
+              '\n\nEste es el Nombre de Paquete: '+_packageInfo.packageName+
               '\nNumero de compilación: '+_packageInfo.buildNumber+
-              'Descripción General',
+              '\n\nDescripción General',
               textAlign: TextAlign.left,
               overflow: TextOverflow.clip,
               style: TextStyle(fontStyle: FontStyle.normal, fontSize: 16.0),
