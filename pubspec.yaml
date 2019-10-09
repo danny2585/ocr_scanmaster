@@ -21,7 +21,7 @@ dependencies:
     sdk: flutter
   carousel_pro: ^1.0.0
   package_info: ^0.4.0+6
-  flutter_camera_ml_vision: ^2.2.2
+  flutter_mobile_vision: ^0.1.3
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

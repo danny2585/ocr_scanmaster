@@ -4,6 +4,8 @@ import 'package:ocr_scan_master/carousel.dart';
 import 'package:ocr_scan_master/provider.dart';
 import 'package:ocr_scan_master/screens/acerca_de.dart';
 
+import 'back_screens/back_camera.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => new _HomeState();
@@ -58,8 +60,9 @@ class _HomeState extends State<Home> {
             title: new Text("Escanear Documento"),
               trailing: new Icon(Icons.camera, color: Colors.green[100],),
               onTap: () {
-                Navigator.of(context).pop(
-                  print("Escanear Documento")
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BackScreen_Camera()),
                 );
               },
           ),
