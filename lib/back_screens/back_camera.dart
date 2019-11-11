@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
 import 'package:ocr_scan_master/screens/camera.dart';
+import 'package:ocr_scan_master/screens/editText.dart';
 
 class BackScreen_Camera extends StatefulWidget {
   @override
@@ -23,31 +25,30 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
     FlutterMobileVision.start().then((previewSizes) => setState(() {
       // _previewBarcode = previewSizes[_cameraBarcode].first;
       _previewOcr = previewSizes[_cameraOcr].first;
-      // _previewFace = previewSizes[_cameraFace].first;
     }));
   }
 
   @override
   Widget build(BuildContext context) {
    return new MaterialApp(
+    theme:  new ThemeData.dark(),
      home: new DefaultTabController(
       length: 1,
       child: new Scaffold(
         appBar: new AppBar(
           bottom: new TabBar(
-            indicatorColor: Colors.black54,
+            indicatorColor: Colors.lightBlue,
             tabs: [
               //new Tab(text: 'Barcode'),
               new Tab(text: 'OCR'),
-              //new Tab(text: 'Face')
             ],
           ),
-          title: new Text('Texto'),
+          backgroundColor: new Color(0),
+          title: new Text('Escaner'),
         ),
         body: new TabBarView(children: [
           // _getBarcodeScreen(context),
           _getOcrScreen(context),
-          // _getFaceScreen(context),
         ]),
       ),
     ),
@@ -156,7 +157,7 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
         left: 18.0,
         right: 18.0,
       ),
-      child: const Text('Preview size:'),
+      child: const Text('Calidad:'),
     ));
 
     items.add(new Padding(
@@ -253,14 +254,35 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
         fps: 2.0,
       );
     } on Exception {
-      texts.add(new OcrText('Failed to recognize text.'));
+      texts.add(new OcrText('Fallo al reconocer el texto.'));
     }
 
     if (!mounted) return;
-
+    
     setState(() => _textsOcr = texts);
   }
+  
+  // String completeText(String allText){
+  //   _totalText += "\n\n"+ allText;
+  //   return _totalText;
+  // }
 }
+
+///
+///CompletText
+///
+// class CompletText extends StatelessWidget {
+//   String _allText;
+//   CompletText(this._allText);
+  
+//  @override
+//  Widget build(BuildContext context) {
+//   return new MaterialApp(
+  
+//   );
+//  }
+// }
+
 ///
 /// OcrTextWidget
 ///
@@ -278,7 +300,7 @@ class OcrTextWidget extends StatelessWidget {
       trailing: const Icon(Icons.arrow_forward),
       onTap: () => Navigator.of(context).push(
             new MaterialPageRoute(
-              builder: (context) => new OcrTextDetail(ocrText),
+              builder: (context) => new TextEdit(ocrText),
             ),
           ),
     );

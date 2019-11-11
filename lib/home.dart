@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:ocr_scan_master/carousel.dart';
 import 'package:ocr_scan_master/provider.dart';
 import 'package:ocr_scan_master/screens/acerca_de.dart';
+import 'package:ocr_scan_master/screens/gallery.dart';
 
 import 'back_screens/back_camera.dart';
 
@@ -73,9 +74,10 @@ class _HomeState extends State<Home> {
           new ListTile(////////////////////////////////////// Boton Abrir DrawerHeader
             title: new Text("Escanear Documento Existente"),
               trailing: new Icon(Icons.file_upload, color: Colors.purple[50],),
-                onTap: () {
-                Navigator.of(context).pop(
-                  print("Escanear Documento Existente")
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CameraApp()),
                 );
               },
           ),
