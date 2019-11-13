@@ -56,13 +56,15 @@ class _TextEditState extends State<TextEdit> {
           //   ])
           // ),
 
-
+          
           TextFormField(
             decoration: new InputDecoration.collapsed(
               border: InputBorder.none,
               hintText: 'Escribe aqui'
             ),
             initialValue: widget.ocrText.value.splitMapJoin("/n"),
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
             
             onSaved: (String value) {
             // This optional block of code can be used to run
@@ -71,7 +73,7 @@ class _TextEditState extends State<TextEdit> {
             // validator: (String value) {
             //   return value.contains('@') ? 'Do not use the @ char.' : null;
             // },
-          ),
+          )
         ]  
       ),
     ),
