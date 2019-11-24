@@ -28,7 +28,7 @@ class _CameraAppState extends State<CameraApp> {
       theme:  new ThemeData.dark(),
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text('Escanear Documento Existente'),
+          title: new Text('Escanear Imagen Existente'),
         ),
         body: new Container(
           child: new Center(

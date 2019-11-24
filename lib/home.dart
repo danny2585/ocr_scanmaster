@@ -86,11 +86,11 @@ class _HomeState extends State<Home> {
           ),
 
           new ListTile(////////////////////////////////////// Boton Escanear DrawerHeader
-            title: new Text("Historial"),
+            title: new Text("Notas Rapidas"),
               trailing: new Icon(Icons.history, color: Colors.grey[400],),
               onTap: () {
                 Navigator.of(context).pop(
-                  print("Historial")
+                  // MaterialPageRoute(builder: (context) => TextEdit())
                 );
               },
           ),

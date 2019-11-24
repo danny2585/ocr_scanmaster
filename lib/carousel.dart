@@ -20,7 +20,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    //double screenHeight = MediaQuery.of(context).size.height;
+    double screenHeight = MediaQuery.of(context).size.width;
     Widget carouselmage = new Container(
       height: MediaQuery.of(context).size.height,
       child: new Carousel(
@@ -40,7 +40,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
        child:Column(
          children: <Widget>[
            new Container(
-             height: 450,
+             height: screenHeight,
              child: new ClipRRect(
                borderRadius: BorderRadius.circular(30.0),
                child: new Stack(
