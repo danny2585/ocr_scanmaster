@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 var aunNameDoc;
 class TextStorage {
   Future<String> get _externalPath async {
@@ -14,16 +15,9 @@ class TextStorage {
   }
 
   Future<File> get _externelFile async {
-    // var aunNameDoc = 0;
-    // CounterStorage counterStorage = new CounterStorage();
-    // counterStorage.readCounter().then((var value) {
-    //   aunNameDoc = value;
-    //   print("/////////////////////////////////////////////////////////////////////// vaue: $value");
-    // });
     final path = await _externalPath;
     print("//////////////////////////////////////////////////////////////////////////////////auxnamedoc: $aunNameDoc");
     return File('$path/ScanMaster/documento_'+aunNameDoc.toString()+'.doc');
-    
   }
 
   // Future<String> readText() async {
@@ -97,19 +91,30 @@ class _SaveTextState extends State<SaveText> {
   String resultToSave;
   _SaveTextState(this.resultToSave);
   int contador;
+  String _url;
 
   @override
   void initState() {
     super.initState();
     widget.storagel.readCounter().then((int value) {
       setState(() {
-        print("/////////////////////////////////////////////VALUE: $value");
+        _url = "";//"file: storage/emulated/0/Android/data/com.example.ocr_scan_master/files/ScanMaster";
          contador = value;
-
-        print("/////////////////////////////////////////////VALUE: $contador");
          _almacena();
       });
     });
+  }
+
+  void openURL() async{
+    print("open click");
+    var url = _url;
+    print("///////////////////////////el _uri: "+_url);
+    if(await canLaunch(url)){
+      launch(url);
+    }
+    else{
+      print("/////////////////error de compativilidad "+_url.toString());
+    }
   }
 
   Future<File> _almacena() {
@@ -123,23 +128,36 @@ class _SaveTextState extends State<SaveText> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         title: Text('Guardar'),
         actions: <Widget>[
-         new IconButton(////////////////////////////////////// Buton Print
-           icon: new Icon(Icons.print, color: Colors.white,),
-           onPressed: () {
-            //  Navigator.push(
-            //     context,
-            //     MaterialPageRoute(builder: (context) => SaveText(storage:  TextStorage(), resultToSave: result,)),
-            //   );
-           },
-         ),
-       ],       
+          new IconButton(////////////////////////////////////// Buton Print
+            icon: new Icon(Icons.print, color: Colors.white,),
+            onPressed: () {
+              //  Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => SaveText(storage:  TextStorage(), resultToSave: result,)),
+              //   );
+            },
+          ),
+        ],       
       ),
       body: Center(
-        child: Text("Guardado como Documento_"+contador.toString(),),
+        child: new Column(
+          children:<Widget>[
+            Text("Guardado como Documento_"+contador.toString(),),
+            new Divider(
+              height: 15.0,
+              color: Colors.green[300],
+            ),
+            new RaisedButton(
+              color: Colors.green[300],
+              child: new Text("???"),
+              onPressed: openURL,
+            )
+          ],
+        ),
       ),
     );
   }

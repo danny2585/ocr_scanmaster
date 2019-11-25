@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
 import 'package:ocr_scan_master/screens/camera.dart';
 import 'package:ocr_scan_master/screens/editText.dart';
@@ -37,7 +38,7 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
       child: new Scaffold(
         appBar: new AppBar(
           bottom: new TabBar(
-            indicatorColor: Colors.lightBlue,
+            indicatorColor: Colors.green[300],
             tabs: [
               //new Tab(text: 'Barcode'),
               new Tab(text: 'OCR'),
@@ -175,30 +176,35 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
     ));
 
     items.add(new SwitchListTile(
+      activeColor: Colors.green[300],
       title: const Text('Auto focus:'),
       value: _autoFocusOcr,
       onChanged: (value) => setState(() => _autoFocusOcr = value),
     ));
 
     items.add(new SwitchListTile(
+      activeColor: Colors.green[300],
       title: const Text('Flash:'),
       value: _flashOcr,
       onChanged: (value) => setState(() => _flashOcr = value),
     ));
 
     items.add(new SwitchListTile(
+      activeColor: Colors.green[300],
       title: const Text('Retornar todo el texto:'),
       value: _multipleOcr,
       onChanged: (value) => setState(() => _multipleOcr = value),
     ));
 
     items.add(new SwitchListTile(
+      activeColor: Colors.green[300],
       title: const Text('Capturar tocando la pantalla:'),
       value: _waitTapOcr,
       onChanged: (value) => setState(() => _waitTapOcr = value),
     ));
 
     items.add(new SwitchListTile(
+      activeColor: Colors.green[300],
       title: const Text('Mostrar texto en pantalla:'),
       value: _showTextOcr,
       onChanged: (value) => setState(() => _showTextOcr = value),
@@ -212,6 +218,7 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
           bottom: 12.0,
         ),
         child: new RaisedButton(
+          color: Colors.green[300],
           onPressed: _read,
           child: new Text('¡ESCANEAR!'),
         ),

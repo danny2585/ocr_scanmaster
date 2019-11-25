@@ -60,7 +60,7 @@ class _Acerca_deState extends State<Acerca_de> {
               style: TextStyle( fontSize: 11.0, fontStyle: FontStyle.italic),
             ),
 
-            new Image(image: AssetImage('images/Logo.png'), width: MediaQuery.of(context).size.width / 2, ),
+            new Image(image: AssetImage('images/logo_hd_trans.png'), width: MediaQuery.of(context).size.width / 2, ),
 
             new Text(
               '\n\nEste es el Nombre de Paquete: '+_packageInfo.packageName+

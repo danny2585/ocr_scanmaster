@@ -50,11 +50,19 @@ class _ImageCarouselState extends State<ImageCarousel> {
                   //    textAlign: TextAlign.center,
                   //    style: TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic),
                   //  ),
-                   carouselmage,        
+                   carouselmage,
+                  
                  ],
                ),
              ),
            ),
+           new Center(
+            child: Image.asset(
+              'images/anuncio.png',
+              width: MediaQuery.of(context).size.width / 1.3,
+              height: 80,
+            ),
+          )
          ],
        ),
      ),
