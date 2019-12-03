@@ -2,15 +2,15 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
 class ImageCarousel extends StatefulWidget {
-  var aImages, autoP, showIndocador;
-  ImageCarousel(this.aImages, this.autoP, this.showIndocador);
+  var aImages;
+  ImageCarousel(this.aImages);
   @override
-  _ImageCarouselState createState() => new _ImageCarouselState(this.aImages, this.autoP, this.showIndocador);
+  _ImageCarouselState createState() => new _ImageCarouselState(this.aImages);
  }
 
 class _ImageCarouselState extends State<ImageCarousel> {
   var aImage, autorep, indicador;
- _ImageCarouselState(this.aImage, this.autorep, this.indicador);
+ _ImageCarouselState(this.aImage);
   
   @override
   void initState() {
@@ -26,17 +26,16 @@ class _ImageCarouselState extends State<ImageCarousel> {
       child: new Carousel(
         boxFit: BoxFit.cover,
         images: aImage,
-        autoplay: autorep,
+        autoplay: true,
         autoplayDuration: Duration(seconds: 4),
         animationCurve: Curves.fastOutSlowIn,
         animationDuration: Duration(milliseconds: 2000),
-        showIndicator: indicador,
+        showIndicator: true,
+        indicatorBgPadding: 5.0,
       ),
     );
     
-    return Scaffold(
-      
-     body: SingleChildScrollView(
+    return SingleChildScrollView(
        child:Column(
          children: <Widget>[
            new Container(
@@ -52,20 +51,12 @@ class _ImageCarouselState extends State<ImageCarousel> {
                   //  ),
                    carouselmage,
                   
-                 ],
-               ),
-             ),
-           ),
-           new Center(
-            child: Image.asset(
-              'images/anuncio.png',
-              width: MediaQuery.of(context).size.width / 1.3,
-              height: 80,
+                ],
+              ),
             ),
-          )
-         ],
-       ),
-     ),
+          ),
+        ],
+      ),
     );
   }
 }

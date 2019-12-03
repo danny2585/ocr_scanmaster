@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:ocr_scan_master/carousel.dart';
 import 'package:ocr_scan_master/provider.dart';
 import 'package:ocr_scan_master/screens/acerca_de.dart';
-import 'package:ocr_scan_master/screens/gallery.dart';
+import 'package:ocr_scan_master/screens/ayuda.dart';
+// import 'package:ocr_scan_master/screens/gallery.dart';
 
 import 'back_screens/back_camera.dart';
 
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: Text("Scan\nMaster")//new Image(image: new AssetImage('images/imgen2.jpg'),),
+        title: Text("Scan\nMaster", textAlign: TextAlign.center,)//new Image(image: new AssetImage('images/imgen2.jpg'),),
       ),
 
       drawer: new Drawer(
@@ -39,7 +40,7 @@ class _HomeState extends State<Home> {
             accountName: Text('Scan\nMaster',),
             currentAccountPicture: GestureDetector(
               child: new CircleAvatar(
-                backgroundImage: AssetImage('images/imgen2.jpg'),
+                backgroundImage: AssetImage('images/logo_hd_trans.png'),
                 
               ),
             ),
@@ -63,7 +64,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => BackScreen_Camera()),
+                  MaterialPageRoute(builder: (context) => BackScreenCamera()),
                 );
               },
           ),
@@ -71,19 +72,19 @@ class _HomeState extends State<Home> {
             height: 5.0,
           ),
           
-          new ListTile(////////////////////////////////////// Boton Abrir DrawerHeader
-            title: new Text("Escanear Documento Existente"),
-              trailing: new Icon(Icons.file_upload, color: Colors.green[300],),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CameraApp()),
-                );
-              },
-          ),
-          new Divider(
-            height: 5.0,
-          ),
+          // new ListTile(////////////////////////////////////// Boton Abrir DrawerHeader
+          //   title: new Text("Escanear Documento Existente"),
+          //     trailing: new Icon(Icons.file_upload, color: Colors.green[300],),
+          //     onTap: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => CameraApp()),
+          //       );
+          //     },
+          // ),
+          // new Divider(
+          //   height: 5.0,
+          // ),
 
           new ListTile(////////////////////////////////////// Boton Escanear DrawerHeader
             title: new Text("Notas Rapidas"),
@@ -102,8 +103,9 @@ class _HomeState extends State<Home> {
             title: new Text("Ayuda"),
               trailing: new Icon(Icons.help_outline, color: Colors.green[300],),
               onTap: () {
-                Navigator.of(context).pop(
-                  print("Ayuda")
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyStepper()),
                 );
               },
           ),
@@ -112,12 +114,12 @@ class _HomeState extends State<Home> {
           ),
 
           new ListTile(////////////////////////////////////// Boton Acerca De DrawerHeader
-            title: new Text("Acerca de:"),
+            title: new Text("Informacion"),
               trailing: new Icon(Icons.info_outline, color: Colors.green[300],),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Acerca_de()),
+                  MaterialPageRoute(builder: (context) => AcercaDe()),
                 );
               },
           ),
@@ -133,18 +135,24 @@ class _HomeState extends State<Home> {
           ],
         )
       ),
-      body: new PageView.builder(
-        itemBuilder: (context,position){
-          imagesPrins = setPantallainicio;
-          print("\n\n\n El ancho es de: "+MediaQuery.of(context).size.width.toString()+"\n\n\n");
-          return ImageCarousel(imagesPrins, true, false);
-        },
-        // children: _getMediaList(),
-        controller: _pageController,
-        onPageChanged: (int index){
-          setState(() {
-          });
-          },
+      body: new SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            
+            new ImageCarousel(setPantallainicio),
+            Divider(
+              height: 10.0,
+            ),
+            new Center(
+              child: Image.asset(
+                'images/anuncio.png',
+                width: MediaQuery.of(context).size.width / 1.3,
+                height: 80,
+              ),
+            )
+            // new FloatComercial(),
+
+          ]),
       ),
    );
   }
