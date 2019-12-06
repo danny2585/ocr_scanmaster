@@ -4,6 +4,7 @@ import 'package:ocr_scan_master/carousel.dart';
 import 'package:ocr_scan_master/provider.dart';
 import 'package:ocr_scan_master/screens/acerca_de.dart';
 import 'package:ocr_scan_master/screens/ayuda.dart';
+import 'package:ocr_scan_master/screens/editText.dart';
 // import 'package:ocr_scan_master/screens/gallery.dart';
 
 import 'back_screens/back_camera.dart';
@@ -88,12 +89,12 @@ class _HomeState extends State<Home> {
 
           new ListTile(////////////////////////////////////// Boton Escanear DrawerHeader
             title: new Text("Notas Rapidas"),
-              trailing: new Icon(Icons.history, color: Colors.green[300],),
-              onTap: () {
-                Navigator.of(context).pop(
-                  // MaterialPageRoute(builder: (context) => TextEdit())
-                );
-              },
+              trailing: new Icon(Icons.note_add, color: Colors.green[300],),
+              onTap: () => Navigator.of(context).push(
+                new MaterialPageRoute(
+                  builder: (context) => new TextEdit(""),
+                ),
+              ),
           ),
           new Divider(
             height: 5.0,

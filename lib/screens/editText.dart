@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
+// import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
 import 'package:ocr_scan_master/back_screens/save.dart';
 import 'package:path_provider/path_provider.dart';
 
 class TextEdit extends StatefulWidget {
-  String ocrText;
+  var ocrText;
 
   TextEdit(this.ocrText);
   @override
   _TextEditState createState() => new _TextEditState(this.ocrText);
  }
 class _TextEditState extends State<TextEdit> {
-  String ocrText;
+  var ocrText;
   _TextEditState(this.ocrText);
   String result = "";
   String ruta;
@@ -20,7 +20,7 @@ class _TextEditState extends State<TextEdit> {
   void initState() {
     super.initState();
     print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLegue");
-    result = ocrText.splitMapJoin("/n");
+    result = ocrText;
     showRuta();
   }
 
@@ -34,7 +34,7 @@ class _TextEditState extends State<TextEdit> {
 
   @override
   Widget build(BuildContext context) {
-    var bodyText = ocrText.splitMapJoin("/n");
+    var bodyText = ocrText;
     //theme:  new ThemeData.light();
     return new Scaffold(
       appBar: new AppBar(
@@ -69,6 +69,7 @@ class _TextEditState extends State<TextEdit> {
               hintText: 'Escribe aqui'
             ),
             initialValue: bodyText,
+            textAlign: TextAlign.justify,
             keyboardType: TextInputType.multiline,
             maxLines: null,
             

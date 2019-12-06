@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
-import 'package:ocr_scan_master/screens/camera.dart';
 import 'package:ocr_scan_master/screens/editText.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class BackScreen_Camera extends StatefulWidget {
+var allText = "";
+// List<String> allText = new List();
+class BackScreenCamera extends StatefulWidget {
   @override
-  _BackScreen_CameraState createState() => new _BackScreen_CameraState();
+  _BackScreenCameraState createState() => new _BackScreenCameraState();
  }
-class _BackScreen_CameraState extends State<BackScreen_Camera> {
+class _BackScreenCameraState extends State<BackScreenCamera> {
   
   int _cameraOcr = FlutterMobileVision.CAMERA_BACK;
   bool _autoFocusOcr = true;
@@ -19,6 +19,7 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
   bool _showTextOcr = true;
   Size _previewOcr;
   List<OcrText> _textsOcr = [];
+  bool validador = true;
   
   @override
   void initState() {
@@ -59,20 +60,20 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
   ///
   /// Scan formats
   ///
-  List<DropdownMenuItem<int>> _getFormats() {
-    List<DropdownMenuItem<int>> formatItems = [];
+  // List<DropdownMenuItem<int>> _getFormats() {
+  //   List<DropdownMenuItem<int>> formatItems = [];
 
-    Barcode.mapFormat.forEach((key, value) {
-      formatItems.add(
-        new DropdownMenuItem(
-          child: new Text(value),
-          value: key,
-        ),
-      );
-    });
+  //   Barcode.mapFormat.forEach((key, value) {
+  //     formatItems.add(
+  //       new DropdownMenuItem(
+  //         child: new Text(value),
+  //         value: key,
+  //       ),
+  //     );
+  //   });
 
-    return formatItems;
-  }
+  //   return formatItems;
+  // }
 
   ///
   /// Camera list
@@ -98,7 +99,6 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
   ///
   List<DropdownMenuItem<Size>> _getPreviewSizes(int facing) {
     List<DropdownMenuItem<Size>> previewItems = [];
-
     List<Size> sizes = FlutterMobileVision.getPreviewSizes(facing);
 
     if (sizes != null) {
@@ -118,6 +118,7 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
         ),
       );
     }
+
 
     return previewItems;
   }
@@ -196,12 +197,12 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
       onChanged: (value) => setState(() => _multipleOcr = value),
     ));
 
-    items.add(new SwitchListTile(
-      activeColor: Colors.green[300],
-      title: const Text('Capturar tocando la pantalla:'),
-      value: _waitTapOcr,
-      onChanged: (value) => setState(() => _waitTapOcr = value),
-    ));
+    // items.add(new SwitchListTile(
+    //   activeColor: Colors.green[300],
+    //   title: const Text('Capturar tocando la pantalla:'),
+    //   value: _waitTapOcr,
+    //   onChanged: (value) => setState(() => _waitTapOcr = value),
+    // ));
 
     items.add(new SwitchListTile(
       activeColor: Colors.green[300],
@@ -219,22 +220,34 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
         ),
         child: new RaisedButton(
           color: Colors.green[300],
+          highlightColor: Colors.green[900],
           onPressed: _read,
           child: new Text('¡ESCANEAR!'),
         ),
       ),
     );
 
-    items.addAll(
-      ListTile.divideTiles(
-        context: context,
-        tiles: _textsOcr
+    if (validador) {
+      items.addAll(
+        ListTile.divideTiles(
+          context: context,
+          tiles: _textsOcr
             .map(
               (ocrText) => new OcrTextWidget(ocrText),
             )
             .toList(),
-      ),
-    );
+        ),
+      );
+    }
+    else{
+      Fluttertoast.showToast(
+        textColor: Colors.green[300],
+        msg: _textsOcr[0].value,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1
+      );
+    }
 
     return new ListView(
       padding: const EdgeInsets.only(
@@ -249,6 +262,7 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
   ///
   Future<Null> _read() async {
     List<OcrText> texts = [];
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TEXTO MAS CADENA ESCRITA: "+_cameraOcr.toString());
     try {
       texts = await FlutterMobileVision.read(
         flash: _flashOcr,
@@ -258,37 +272,54 @@ class _BackScreen_CameraState extends State<BackScreen_Camera> {
         showText: _showTextOcr,
         preview: _previewOcr,
         camera: _cameraOcr,
-        fps: 2.0,
+        fps: 1.0,
       );
+      setState(() {
+        validador = true;
+      });
     } on Exception {
       texts.add(new OcrText('Fallo al reconocer el texto.'));
+      setState(() {
+        validador = false;
+      });
+    }
+
+    
+    if(validador == true){
+      setState(() {
+        allText = "";
+      });
+      for (var x = 0; x < texts.length; x++) {
+        for (int i = 0; i < texts.length-x-1; i++) {
+          if(texts[i].top > texts[i+1].top){
+              var tmp = texts[i+1];
+              texts[i+1] = texts[i];
+              texts[i] = tmp;
+          }
+        }
+        
+      }
+      
+      texts.map(
+        (ocrText) => allText += ocrText.value+"\n\n",
+      ).toList();
+      setState(() {
+        allText = allText;
+      });
+    }
+    else{
+      setState(() {
+        allText = "";
+      });
+      allText = texts[0].value;
     }
 
     if (!mounted) return;
-    
-    setState(() => _textsOcr = texts);
+    setState(() => _textsOcr.add(new OcrText(allText)));
+
   }
   
-  // String completeText(String allText){
-  //   _totalText += "\n\n"+ allText;
-  //   return _totalText;
-  // }
 }
-
-///
-///CompletText
-///
-// class CompletText extends StatelessWidget {
-//   String _allText;
-//   CompletText(this._allText);
-  
-//  @override
-//  Widget build(BuildContext context) {
-//   return new MaterialApp(
-  
-//   );
-//  }
-// }
 
 ///
 /// OcrTextWidget
@@ -298,8 +329,14 @@ class OcrTextWidget extends StatelessWidget {
 
   OcrTextWidget(this.ocrText);
 
+  // @override
+  // void allvalue(){  
+  //   setState(() => allText += ocrText.value);
+  // }
+
   @override
   Widget build(BuildContext context) {
+
     return new ListTile(
       leading: const Icon(Icons.title),
       title: new Text(ocrText.value),
@@ -307,7 +344,7 @@ class OcrTextWidget extends StatelessWidget {
       trailing: const Icon(Icons.arrow_forward),
       onTap: () => Navigator.of(context).push(
             new MaterialPageRoute(
-              builder: (context) => new TextEdit(ocrText),
+              builder: (context) => new TextEdit(ocrText.value),
             ),
           ),
     );

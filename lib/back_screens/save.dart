@@ -4,8 +4,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 var aunNameDoc;
+var direccion;
 class TextStorage {
   Future<String> get _externalPath async {
     final directory = await getExternalStorageDirectory();
@@ -80,44 +81,46 @@ class SaveText extends StatefulWidget {
   final TextStorage storage;
   final CounterStorage storagel;
   String resultToSave;
+  String ruta;
 
-  SaveText({Key key, @required this.storage, @required this.storagel, @required this.resultToSave}) : super(key: key);
+  SaveText({Key key, @required this.storage, @required this.storagel, @required this.resultToSave, this.ruta}) : super(key: key);
 
   @override
-  _SaveTextState createState() => _SaveTextState(this.resultToSave);
+  _SaveTextState createState() => _SaveTextState(this.resultToSave, this.ruta);
 }
 
 class _SaveTextState extends State<SaveText> {
   String resultToSave;
-  _SaveTextState(this.resultToSave);
+  String ruta;
+  _SaveTextState(this.resultToSave, this.ruta);
   int contador;
-  String _url;
+  // String _url;
 
   @override
   void initState() {
     super.initState();
     widget.storagel.readCounter().then((int value) {
       setState(() {
-        _url = "";//"file: storage/emulated/0/Android/data/com.example.ocr_scan_master/files/ScanMaster";
+        // _url = "";//"file: storage/emulated/0/Android/data/com.example.ocr_scan_master/files/ScanMaster";
          contador = value;
          _almacena();
       });
     });
   }
 
-  void openURL() async{
-    print("open click");
-    var url = _url;
-    print("///////////////////////////el _uri: "+_url);
-    if(await canLaunch(url)){
-      launch(url);
-    }
-    else{
-      print("/////////////////error de compativilidad "+_url.toString());
-    }
-  }
+  // void openURL() async{
+  //   print("open click");
+  //   var url = _url;
+  //   print("///////////////////////////el _uri: "+_url);
+  //   if(await canLaunch(url)){
+  //     launch(url);
+  //   }
+  //   else{
+  //     print("/////////////////error de compativilidad "+_url.toString());
+  //   }
+  // }
 
-  Future<File> _almacena() {
+  void _almacena() {
     setState(() {
       contador++;
       aunNameDoc = contador;
@@ -144,20 +147,23 @@ class _SaveTextState extends State<SaveText> {
         ],       
       ),
       body: Center(
-        child: new Column(
-          children:<Widget>[
-            Text("Guardado como Documento_"+contador.toString(),),
-            new Divider(
-              height: 15.0,
-              color: Colors.green[300],
+        // child: new Column(
+        //   children:<Widget>[
+            child: Text(
+              "Guardado como Documento_"+contador.toString()+"\nRuta: "+ruta+"/ScanMaster",
+              textAlign: TextAlign.center,
             ),
-            new RaisedButton(
-              color: Colors.green[300],
-              child: new Text("???"),
-              onPressed: openURL,
-            )
-          ],
-        ),
+            // new Divider(
+            //   height: 15.0,
+            //   color: Colors.green[300],
+            // ),
+            // new RaisedButton(
+            //   color: Colors.green[300],
+            //   child: new Text("???"),
+            //   onPressed: openURL,
+            // )
+        //   ],
+        // ),
       ),
     );
   }
