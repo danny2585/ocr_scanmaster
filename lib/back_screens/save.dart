@@ -94,31 +94,24 @@ class _SaveTextState extends State<SaveText> {
   String ruta;
   _SaveTextState(this.resultToSave, this.ruta);
   int contador;
-  // String _url;
+  String _url;
 
   @override
   void initState() {
     super.initState();
     widget.storagel.readCounter().then((int value) {
       setState(() {
-        // _url = "";//"file: storage/emulated/0/Android/data/com.example.ocr_scan_master/files/ScanMaster";
          contador = value;
+         _url = ruta+"/ScanMaster/Documento_"+contador.toString()+'.doc';
          _almacena();
       });
     });
   }
 
-  // void openURL() async{
-  //   print("open click");
-  //   var url = _url;
-  //   print("///////////////////////////el _uri: "+_url);
-  //   if(await canLaunch(url)){
-  //     launch(url);
-  //   }
-  //   else{
-  //     print("/////////////////error de compativilidad "+_url.toString());
-  //   }
-  // }
+  void openURL() async{
+    print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| Ruta: "+_url);
+    
+  }
 
   void _almacena() {
     setState(() {
@@ -135,35 +128,35 @@ class _SaveTextState extends State<SaveText> {
       appBar: AppBar(
         title: Text('Guardar'),
         actions: <Widget>[
-          new IconButton(////////////////////////////////////// Buton Print
-            icon: new Icon(Icons.print, color: Colors.white,),
-            onPressed: () {
-              //  Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => SaveText(storage:  TextStorage(), resultToSave: result,)),
-              //   );
-            },
-          ),
+          // new IconButton(////////////////////////////////////// Buton Print
+          //   icon: new Icon(Icons.print, color: Colors.white,),
+          //   onPressed: () {
+          //     //  Navigator.push(
+          //     //     context,
+          //     //     MaterialPageRoute(builder: (context) => SaveText(storage:  TextStorage(), resultToSave: result,)),
+          //     //   );
+          //   },
+          // ),
         ],       
       ),
       body: Center(
-        // child: new Column(
-        //   children:<Widget>[
-            child: Text(
+        child: new Column(
+          children:<Widget>[
+            new Text(
               "Guardado como Documento_"+contador.toString()+"\nRuta: "+ruta+"/ScanMaster",
               textAlign: TextAlign.center,
             ),
-            // new Divider(
-            //   height: 15.0,
-            //   color: Colors.green[300],
-            // ),
+            new Divider(
+              height: 15.0,
+              color: Colors.green[300],
+            ),
             // new RaisedButton(
             //   color: Colors.green[300],
             //   child: new Text("???"),
             //   onPressed: openURL,
             // )
-        //   ],
-        // ),
+          ],
+        ),
       ),
     );
   }

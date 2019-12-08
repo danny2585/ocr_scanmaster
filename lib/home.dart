@@ -5,6 +5,7 @@ import 'package:ocr_scan_master/provider.dart';
 import 'package:ocr_scan_master/screens/acerca_de.dart';
 import 'package:ocr_scan_master/screens/ayuda.dart';
 import 'package:ocr_scan_master/screens/editText.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:ocr_scan_master/screens/gallery.dart';
 
 import 'back_screens/back_camera.dart';
@@ -52,7 +53,17 @@ class _HomeState extends State<Home> {
                 begin: FractionalOffset.topLeft,
                 end: FractionalOffset.bottomRight
               ),
-            ), accountEmail: Text('ocr.scanmaster@gmail.com'),
+            ), accountEmail: InkWell(
+                  child: new Text(
+                    "ocr.scanmaster@gmail.com", 
+                    style: TextStyle( 
+                      fontSize: 16.0,
+                      decoration: TextDecoration.underline,
+                      color: Colors.green[900], 
+                    ),
+                  ),
+                  onTap: () => launch('mailto:ocr.scanmaster@gmail.com'),
+              ),
           ),
           // new Container(
           //   child: new DrawerHeader(child: new CircleAvatar(child: Icon(Icons.camera, size: 100.0, color: Colors.amber,), radius: 50.0,)), 
@@ -144,13 +155,13 @@ class _HomeState extends State<Home> {
             Divider(
               height: 10.0,
             ),
-            new Center(
-              child: Image.asset(
-                'images/anuncio.png',
-                width: MediaQuery.of(context).size.width / 1.3,
-                height: 80,
-              ),
-            )
+            // new Center(
+            //   child: Image.asset(
+            //     'images/anuncio.png',
+            //     width: MediaQuery.of(context).size.width / 1.3,
+            //     height: 80,
+            //   ),
+            // )
             // new FloatComercial(),
 
           ]),

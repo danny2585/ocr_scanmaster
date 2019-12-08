@@ -40,7 +40,7 @@ class _AcercaDeState extends State<AcercaDe> {
             width: MediaQuery.of(context).size.width,
             decoration: new BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('images/BackGroun.jpg'),
+                image: AssetImage('images/logo_gray.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -75,8 +75,13 @@ class _AcercaDeState extends State<AcercaDe> {
                   style: TextStyle(fontStyle: FontStyle.normal, fontSize: 16.0),
                 ),
                 new InkWell(
-                  child: new Text("ocr.scanmaster@gmail.com", 
-                  style: TextStyle( color: Colors.blue[200], fontSize: 16.0),
+                  child: new Text(
+                    "ocr.scanmaster@gmail.com", 
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      decoration: TextDecoration.underline,
+                      color: Colors.green[700],
+                    ),
                   ),
                   onTap: () => launch('mailto:ocr.scanmaster@gmail.com'),
               ),
